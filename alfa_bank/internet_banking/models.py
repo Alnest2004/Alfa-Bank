@@ -52,25 +52,6 @@ class Action(models.Model):
                f'was changed on {str(self.amount)}'
 
 
-class Transaction(models.Model):
-    amount = models.DecimalField(
-        max_digits=12,
-        decimal_places=2
-    )
-    date = models.DateTimeField(auto_now_add=True)
-
-    account = models.ForeignKey(
-        Account,
-        on_delete=models.CASCADE
-    )
-
-    merchant = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f'Account number {self.account.id} ' + \
-               f'sent {str(self.amount)} to {self.merchant}'
-
-
 class Transfer(models.Model):
     from_account = models.ForeignKey(
         Account,
@@ -85,20 +66,36 @@ class Transfer(models.Model):
     )
 
     amount = models.DecimalField(
+        default = 0,
         max_digits=12,
         decimal_places=2
     )
 
+    commission = models.DecimalField(
+        default=0,
+        max_digits=12,
+        decimal_places=2
+    )
 
-class Interest(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
+
+class Loans(models.Model):
     account = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
+        related_name='from_account_loans'
     )
-
-    amount = models.DecimalField(
-        decimal_places=2,
+    Credit_amount = models.DecimalField(
+        default=0,
         max_digits=12,
+        decimal_places=2
     )
+    Paid_out = models.DecimalField(
+        default=0,
+        max_digits=12,
+        decimal_places=2
+    )
+    date = models.DateTimeField(auto_now_add=True)
+
+
