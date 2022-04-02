@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Alfa-Bank</title>
+	<meta charset="utf-8">
+	<meta name="author" content="Нестерович Александр">
+	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/fancybox-thumbs.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/fancybox-buttons.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/fancybox.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/main.css' %}">
+</head>
+<body>
+    {% block header %}
+	<section class="billboard light">
+		<header class="wrapper light">
+			<img class="logo" height="150px" width="150px" src="{% static 'internet_banking/images/logo.png' %}"/>
+			<p class="logo_text">Альфа-Банк</p>
+			<nav>
+				<ul>
+					<li><a href="">About Us</a></li>
+					<li><a href="">Products</a></li>
+					<li><a href="">Journal</a></li>
+					<li><a href="">Contact Us</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<div class="caption light animated wow fadeInDown clearfix">
+			<h1>Sunt In Culpa Officia Deserunt</h1>
+			<p>dolore magna aliqua enim ad minim veniam occaecat</p>
+			<hr>
+		</div>
+		<div class="shadow"></div>
+	</section><!--  End billboard  -->
+    {% endblock header %}
+
+    {% block bank %}
+
+    {% endblock bank %}
+
+    {% block testimonials %}
+
+    {% endblock testimonials %}
+
+	<footer>
+		<div class="wrapper">
+			<div class="rights">
+				<img src="{% static 'internet_banking/images/footer_logo.png' %}" alt="" class="footer_logo"/>
+				<p>© Alfa-Bank by Aleksandr Nesterovich. More information at
+                    <a href="https://www.instagram.com/n_e_s_t_e_r_o_v_i_c_h/" target="_blank">Instagram</a>
+                    and bank's instagram
+                    <a href="https://www.instagram.com/alfabankby/" target="_blank">Instagram</a>
+                </p>
+			</div>
+
+			<nav>
+				<ul>
+					<li><a href="#">About</a></li>
+					<li><a href="#">FAQ</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+	</footer><!--  End footer  -->
+</body>
+</html>
