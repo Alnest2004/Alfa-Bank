@@ -11,30 +11,48 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/fancybox.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/animate.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'internet_banking/css/main.css' %}">
+
+	<link rel="stylesheet" href="{% static 'internet_banking/css/nicepage.css' %}" media="screen">
+	<link rel="stylesheet" href="{% static 'internet_banking/css/Page-9.css' %}" media="screen">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i|Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+
 </head>
 <body>
     {% block header %}
 	<section class="billboard light">
 		<header class="wrapper light">
 			<img class="logo" height="150px" width="150px" src="{% static 'internet_banking/images/logo.png' %}"/>
-			<p class="logo_text">Альфа-Банк</p>
+			<tt class="logo_text" width="200px">Альфа-Банк</tt>
 			<nav>
 				<ul>
-					<li><a href="">About Us</a></li>
-					<li><a href="">Products</a></li>
-					<li><a href="">Journal</a></li>
-					<li><a href="">Contact Us</a></li>
+					<li><a href="{% url 'about_us' %}">О нас</a></li>
+					<li><a href="">Перевод средств</a></li>
+					<li><a href="">Оформить кредит</a></li>
+					<li class="litext">
+						{% if request.user.is_authenticated %}
+							{{ user.username }}  |
+							<a href="{% url 'logout' %}"> Выход </a>
+						{% endif %}
+					</li>
+
 				</ul>
 			</nav>
 		</header>
 
+	{% block menu %}
 		<div class="caption light animated wow fadeInDown clearfix">
-			<h1>Sunt In Culpa Officia Deserunt</h1>
-			<p>dolore magna aliqua enim ad minim veniam occaecat</p>
+			{% if request.user.is_authenticated %}
+							Добро пожаловать, {{ user.username }}!
+			{% endif %}
+			<h1>Альфа-Банк хранит Ваши деньги… и лучшие воспоминания.</h1>
+			<p>Твои личные безналичные.</p>
 			<hr>
 		</div>
 		<div class="shadow"></div>
 	</section><!--  End billboard  -->
+	{% endblock menu %}
+
     {% endblock header %}
 
     {% block bank %}

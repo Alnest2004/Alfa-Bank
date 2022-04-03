@@ -1,0 +1,14 @@
+{% extends 'internet_banking/base.html' %}
+{% load rest_framework %}
+
+{% block bank %}
+        <h1>Profile - {{ profile.name }} </h1>
+
+        <form action="{% url 'login' %}" method="POST" novalidate>
+            {% csrf_token %}
+            {% render_form serializer template_pack='rest_framework/vertical' %}
+            <button type="submit" class="btn btn-default" value="Save">Sign in </button>
+
+        </form>
+
+{% endblock bank %}

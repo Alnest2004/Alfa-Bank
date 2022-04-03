@@ -1,0 +1,14 @@
+{% extends 'internet_banking/base.html' %}
+{% load rest_framework %}
+
+{% block bank %}
+        <h1>Profile - {{ profile.name }} </h1>
+
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            {% render_form serializer %}
+            <button type="submit" value="Save">Sign in </button>
+
+        </form>
+
+{% endblock bank %}
