@@ -6,7 +6,7 @@ from internet_banking.views import HomePageView, AboutView, logout_user, MyProfi
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('about_us', AboutView.as_view(), name='about_us'),
-    path('my_profile', MyProfileView.as_view(), name='my_profile'),
+    path('my_profile/<slug:url>/', MyProfileView.as_view(), name='my_profile'),
 
     path('logout', logout_user, name='logout'),
 ]

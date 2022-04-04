@@ -17,15 +17,35 @@
         <div class="u-align-left u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-palette-2-base u-radius-20 u-shape-round u-group-1">
           <div class="u-container-layout u-container-layout-1">
             <h6 class="u-custom-font u-font-open-sans u-text u-text-default u-text-3">фио</h6>
-            <p class="u-custom-font u-text u-text-4">Fred Morrison</p>
+            <p class="u-custom-font u-text u-text-4">
+                {% for customer in user.client_user.all %}
+                    {{ customer.lname }}
+                    {{ customer.fname }}
+                    {{ customer.pname }}
+                {% endfor %}
+            </p>
             <h6 class="u-custom-font u-font-open-sans u-text u-text-default u-text-5">Email</h6>
-              <p class="u-custom-font u-text u-text-4"> designer@example.com </p>
+              <p class="u-custom-font u-text u-text-4">
+                  {{ user.email }}
+              </p>
             <h6 class="u-custom-font u-font-open-sans u-text u-text-6">телефон</h6>
-              <p class="u-custom-font u-text u-text-4"> (+987) 987 654 321 </p>
+              <p class="u-custom-font u-text u-text-4">
+                {% for customer in user.client_user.all %}
+                    {{ customer.phoneNumber }}
+                {% endfor %}
+              </p>
             <h6 class="u-custom-font u-font-open-sans u-text u-text-7">ГОРОД</h6>
-            <p class="u-custom-font u-text u-text-4">New York, USA</p>
+            <p class="u-custom-font u-text u-text-4">
+                {% for customer in user.client_user.all %}
+                    {{ customer.city }}
+                {% endfor %}
+            </p>
             <h6 class="u-custom-font u-font-open-sans u-text u-text-default u-text-9">ДОМ</h6>
-            <p class="u-custom-font u-text u-text-4">Games, Books, Movies</p>
+            <p class="u-custom-font u-text u-text-4">
+                {% for customer in user.client_user.all %}
+                    {{ customer.house }}
+                {% endfor %}
+            </p>
             <p class="u-custom-font u-text u-text-11">Made by Alexander Nesterovich</p>
           </div>
         </div>
@@ -33,15 +53,31 @@
           <div class="u-repeater u-repeater-1">
             <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item1">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-12">Мой баланс</p>
-                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-13" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">17</h3>
+                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-13" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">
+                    {% for customer in user.account_user.all %}
+                        {{ customer.balance }} BYN
+                    {% endfor %}
+                </h3>
             </div>
             <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item2">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-14">Дата регистрации</p>
-                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-15" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">12+</h3>
+                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-15" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">
+                    {{ user.date_joined|date:"d-m-Y" }}
+                </h3>
             </div>
             <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item3">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-16">Сумма долгов</p>
-                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-17" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">108</h3>
+                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-17" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">
+                    {% for customer in user.account_user.all %}
+                        id = {{ customer.id }}
+
+                    {% endfor %}
+                    {% for acc in user.account_user.all %}
+                            DS
+                            {{ acc.Credit_amount }} ds
+                            DS
+                    {% endfor %}
+                </h3>
             </div>
             <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item4">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-18">Количество кредитов</p>

@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
 from users.models import User
@@ -11,6 +12,9 @@ class Customer(models.Model):
     city = models.CharField(max_length=255)
     house = models.CharField(max_length=255)
     photo = models.ImageField(upload_to="clients/%Y/%m/%d", null=True)
+
+    phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
+    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16, unique=True, null=True)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="client_user",
                              on_delete=models.CASCADE, verbose_name="User")

@@ -1,6 +1,8 @@
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
+
+from users.models import User
 
 
 class HomePageView(TemplateView):
@@ -9,8 +11,18 @@ class HomePageView(TemplateView):
 class AboutView(TemplateView):
     template_name = 'internet_banking/about.html'
 
-class MyProfileView(TemplateView):
+class MyProfileView(DetailView):
+    model = User
+
     template_name = 'internet_banking/my_profile.html'
+    slug_field = 'url'
+    # Имя переданного ключевого аргумента(именованной группы) в
+    # URLConf, содержащего значение слага(slug). По умолчанию,
+    # slug_url_kwarg это 'slug'.
+    slug_url_kwarg = 'url'
+
+
+
 
 def logout_user(request):
     logout(request)
