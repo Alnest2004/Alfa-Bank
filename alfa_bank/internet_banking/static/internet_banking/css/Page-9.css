@@ -3,29 +3,32 @@
   height: 100%;
 }
 
-.u-section-1 .u-sheet-1 {
-  min-height: 1415px;
+ .u-section-1 .u-sheet-1 {
+  min-height: 1109px;
 }
 
 .u-section-1 .u-text-1 {
-  font-size: 6rem;
+  font-size: 4rem;
   letter-spacing: 4px;
   text-transform: uppercase;
   font-family: Raleway, sans-serif;
   font-weight: 700;
-  margin: 80px auto 0;
+  margin: 30px auto 0;
+  color: rgb(207, 7, 7);
 }
 
 .u-section-1 .u-text-2 {
   font-size: 1.5rem;
   width: 524px;
   margin: 12px auto 0;
+  text-align: center;
 }
 
 .u-section-1 .u-image-1 {
   width: 616px;
   height: 410px;
   margin: 43px auto 0 479px;
+  border-radius: 25px;
 }
 
 .u-section-1 .u-group-1 {
@@ -44,6 +47,8 @@
   letter-spacing: 3px;
   font-size: 0.875rem;
   margin: 92px auto 0 0;
+  color:white;
+  font-weight: bold;
 }
 
 .u-section-1 .u-text-4 {
@@ -53,6 +58,7 @@
   font-family: Poppins;
   line-height: 1;
   margin: 12px 60px 0 0;
+  font-weight: 500;
 }
 
 .u-section-1 .u-text-5 {
@@ -60,6 +66,8 @@
   letter-spacing: 3px;
   font-size: 0.875rem;
   margin: 40px auto 0 0;
+  color:white;
+  font-weight: bold;
 }
 
 .u-section-1 .u-btn-1 {
@@ -75,6 +83,8 @@
   letter-spacing: 3px;
   font-size: 0.875rem;
   margin: 40px 60px 0 0;
+  color:white;
+  font-weight: bold;
 }
 
 .u-section-1 .u-btn-2 {
@@ -90,6 +100,8 @@
   letter-spacing: 3px;
   font-size: 0.875rem;
   margin: 40px 60px 0 0;
+  color:white;
+  font-weight: bold;
 }
 
 .u-section-1 .u-text-8 {
@@ -105,6 +117,8 @@
   letter-spacing: 3px;
   font-size: 0.875rem;
   margin: 40px auto 0 0;
+  color:white;
+  font-weight: bold;
 }
 
 .u-section-1 .u-text-10 {
@@ -120,7 +134,9 @@
   letter-spacing: 1px;
   font-family: Poppins;
   line-height: 1;
-  margin: 432px 11px 0 0;
+  margin: 280px 11px 0 0;
+  font-weight: 400;
+
 }
 
 .u-section-1 .u-list-1 {
@@ -130,7 +146,7 @@
 
 .u-section-1 .u-repeater-1 {
   grid-template-columns: repeat(2, calc(50% - 16px));
-  min-height: 500px;
+  min-height: 300px;
   grid-gap: 32px;
 }
 
@@ -208,7 +224,7 @@
   }
 
   .u-section-1 .u-text-1 {
-    margin-top: 92px;
+    margin-top: 0px;
   }
 
   .u-section-1 .u-image-1 {
@@ -217,6 +233,7 @@
     margin-top: 42px;
     margin-right: 0;
     margin-left: auto;
+    border-radius: 25px;
   }
 
   .u-section-1 .u-group-1 {
@@ -260,7 +277,7 @@
   }
 
   .u-section-1 .u-text-1 {
-    margin-top: 561px;
+    margin-top: 0px;
   }
 
   .u-section-1 .u-image-1 {
@@ -269,6 +286,7 @@
     margin-right: initial;
     margin-left: initial;
     width: auto;
+    border-radius: 25px;
   }
 
   .u-section-1 .u-group-1 {

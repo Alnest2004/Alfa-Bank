@@ -1,54 +1,51 @@
 {% extends 'internet_banking/base.html' %}
 {% block menu %}
-
+{% load static %}
 {% endblock menu %}
 {% block bank %}
   <div class="u-body u-xl-mode">
     <section class="u-align-center u-clearfix u-white u-section-1" id="sec-fec9">
       <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
         <h1 class="u-custom-font u-font-raleway u-text u-text-default u-text-palette-2-base u-text-1">МОЙ ПРОФИЛЬ</h1>
-        <p class="u-large-text u-text u-text-variant u-text-2">Профиль пользователя -------</p>
-        <img class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-1" alt="" data-image-width="997" data-image-height="700" src="images/ghghhgh.jpg">
+        <p class="u-large-text u-text u-text-variant u-text-2">Профиль пользователя
+            <tt> {% if request.user.is_authenticated %}
+							"{{ user.username }}"
+                {% endif %}
+            </tt>
+        </p>
+        <img class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-1" alt="" data-image-width="997" data-image-height="700" src="{% static 'internet_banking/images/ghghhgh.jpg' %}">
         <div class="u-align-left u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-palette-2-base u-radius-20 u-shape-round u-group-1">
           <div class="u-container-layout u-container-layout-1">
             <h6 class="u-custom-font u-font-open-sans u-text u-text-default u-text-3">фио</h6>
             <p class="u-custom-font u-text u-text-4">Fred Morrison</p>
             <h6 class="u-custom-font u-font-open-sans u-text u-text-default u-text-5">Email</h6>
-            <a href="https://nicepage.com/k/aesthetic-html-templates" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-2-base u-btn u-button-style u-none u-text-active-palette-2-base u-text-body-alt-color u-text-hover-palette-2-base u-btn-1">designer@example.com</a>
+              <p class="u-custom-font u-text u-text-4"> designer@example.com </p>
             <h6 class="u-custom-font u-font-open-sans u-text u-text-6">телефон</h6>
-            <a href="tel:+987987654321" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-2-base u-btn u-button-style u-none u-text-active-palette-2-base u-text-body-alt-color u-text-hover-palette-2-base u-btn-2">(+987) 987 654 321</a>
+              <p class="u-custom-font u-text u-text-4"> (+987) 987 654 321 </p>
             <h6 class="u-custom-font u-font-open-sans u-text u-text-7">ГОРОД</h6>
-            <p class="u-custom-font u-text u-text-8">New York, USA</p>
+            <p class="u-custom-font u-text u-text-4">New York, USA</p>
             <h6 class="u-custom-font u-font-open-sans u-text u-text-default u-text-9">ДОМ</h6>
-            <p class="u-custom-font u-text u-text-10">Games, Books, Movies</p>
+            <p class="u-custom-font u-text u-text-4">Games, Books, Movies</p>
             <p class="u-custom-font u-text u-text-11">Made by Alexander Nesterovich</p>
           </div>
         </div>
-        <div class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-list u-list-1">
+        <div class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-list u-list-1" style="height: 380px;">
           <div class="u-repeater u-repeater-1">
-            <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle">
-              <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-2">
+            <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item1">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-12">Мой баланс</p>
                 <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-13" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">17</h3>
-              </div>
             </div>
-            <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle">
-              <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-3">
+            <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item2">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-14">Дата регистрации</p>
                 <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-15" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">12+</h3>
-              </div>
             </div>
-            <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle">
-              <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-4">
+            <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item3">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-16">Сумма долгов</p>
                 <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-17" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">108</h3>
-              </div>
             </div>
-            <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle">
-              <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-5">
+            <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item4">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-18">Количество кредитов</p>
                 <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-19" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">150</h3>
-              </div>
             </div>
           </div>
         </div>
