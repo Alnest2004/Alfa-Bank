@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
-from django.urls import reverse
-from users.models import User
 
 
 class Customer(models.Model):
@@ -35,7 +33,7 @@ class Account(models.Model):
                              on_delete=models.PROTECT, verbose_name="User")
 
     def __str__(self):
-        return f'{self.id} of {self.user.username}'
+        return f'{self.user.username}'
 
 
 class Action(models.Model):
@@ -101,5 +99,11 @@ class Loans(models.Model):
         decimal_places=2
     )
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.Credit_amount)
+
+
+
 
 

@@ -68,20 +68,18 @@
             <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item3">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-16">Сумма долгов</p>
                 <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-17" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">
-                    {% for customer in user.account_user.all %}
-                        id = {{ customer.id }}
 
-                    {% endfor %}
-                    {% for acc in user.account_user.all %}
-                            DS
-                            {{ acc.Credit_amount }} ds
-                            DS
-                    {% endfor %}
+                    {{ object.get_sum_loans }} BYN
+
                 </h3>
             </div>
             <div class="u-align-left u-container-style u-list-item u-repeater-item u-shape-rectangle item4">
                 <p class="u-text u-text-default u-text-palette-1-dark-2 u-text-18">Количество кредитов</p>
-                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-19" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">150</h3>
+                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-palette-2-base u-text-19" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">
+
+                    {{ object.get_number_loans }}
+
+                </h3>
             </div>
           </div>
         </div>

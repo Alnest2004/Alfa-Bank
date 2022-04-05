@@ -22,11 +22,11 @@
     {% block header %}
 	<section class="billboard light">
 		<header class="wrapper light">
-			<img class="logo" height="150px" width="150px" src="{% static 'internet_banking/images/logo.png' %}"/>
+			<a href="{% url 'home' %}"> <img class="logo" height="150px" width="150px" src="{% static 'internet_banking/images/logo.png' %}"/> </a>
 			<tt class="logo_text" width="200px">Альфа-Банк</tt>
 			<nav>
 				<ul>
-					<li><a href="{% url 'about_us' %}">О нас</a></li>
+					<li><a href="{% url 'about_us' %}">О Банке</a></li>
 					<li><a href="">Перевод средств</a></li>
 					<li><a href="">Оформить кредит</a></li>
 					<li class="litext">
@@ -63,6 +63,7 @@
 
     {% endblock testimonials %}
 
+	{% block footer %}
 	<div class="clear"></div>
 	<div class="rasporka">
 	</div>
@@ -88,5 +89,7 @@
 			</nav>
 		</div>
 	</footer><!--  End footer  -->
+	{% endblock footer %}
+
 </body>
 </html>
