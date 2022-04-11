@@ -13,30 +13,30 @@ class ProfileSerializer(serializers.ModelSerializer):
                   'password']
 
 
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(
-        style={'placeholder': 'Имя пользователя', 'autofocus': True}
-    )
-    password = serializers.CharField(
-        max_length=100,
-        style={'input_type': 'password', 'placeholder': 'Пароль'}
-
-    )
-
-    def validate(self, data):
-        username = data.get('username', None)
-        password = data.get('password', None)
-        if username == 'test007':
-            raise serializers.ValidationError('Нельзя такое имя')
-        if username is None:
-            raise serializers.ValidationError('Заполните имя пользователя')
-        if password is None:
-            raise serializers.ValidationError('Заполните пароль')
-        return data
-
-    class Meta:
-        model = User
-        fields = ['username', 'password']
+# class LoginSerializer(serializers.Serializer):
+#     username = serializers.CharField(
+#         style={'placeholder': 'Имя пользователя', 'autofocus': True}
+#     )
+#     password = serializers.CharField(
+#         max_length=100,
+#         style={'input_type': 'password', 'placeholder': 'Пароль'}
+#
+#     )
+#
+#     def validate(self, data):
+#         username = data.get('username', None)
+#         password = data.get('password', None)
+#         if username == 'test007':
+#             raise serializers.ValidationError('Нельзя такое имя')
+#         if username is None:
+#             raise serializers.ValidationError('Заполните имя пользователя')
+#         if password is None:
+#             raise serializers.ValidationError('Заполните пароль')
+#         return data
+#
+#     class Meta:
+#         model = User
+#         fields = ['username', 'password']
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):

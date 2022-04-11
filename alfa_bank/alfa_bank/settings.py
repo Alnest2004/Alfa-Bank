@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -214,3 +214,16 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 AUTH_USER_MODEL = 'users.User'
+
+
+RECIPIENTS_EMAIL = [] # СПИСОК ПОЧТ ПОЛУЧАТЕЛЕЙ ПО УМОЛЧАНИЮ
+DEFAULT_FROM_EMAIL = 'admin@mysite.com' # МОЯ ПОЧТА
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "aleksdoterov@gmail.com"
+EMAIL_HOST_PASSWORD = "+sashanesterovich8061021-"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+

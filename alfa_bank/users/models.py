@@ -47,7 +47,7 @@ class User(AbstractUser):
         except:
             return 0
 
-    def create_user(self, username, email, password, password2):
+    def create_user(self, username, email, password):
         if username is None:
             raise TypeError("Пользователь должен заполнить имя пользователя")
 
