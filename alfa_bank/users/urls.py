@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
-from users.views import RegisterUserView, ProfileList, ProfileDetail, LoginUser
+from users.views import ProfileList, ProfileDetail, LoginUserView, RegistrationAPIView
 
 urlpatterns = [
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -10,12 +10,14 @@ urlpatterns = [
 
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
-    # Регистрация пользователя authorization/auth/users/ С методом POST
 
-    path('register/', RegisterUserView.as_view(), name='register'),
+
     path('profile_list/', ProfileList.as_view(), name='profile_list'),
     path('profile-detail/<int:pk>/', ProfileDetail.as_view(), name='profile-detail'),
-    path('login/', LoginUser.as_view(), name='login'),
+    path('login/', LoginUserView.as_view(), name='login'),
+
+    path('register/', RegistrationAPIView.as_view(), name='register')
+
 ]
 
 """ АВТОРИЗАЦИЯ ПО JWT-ТОКЕНУ

@@ -4,16 +4,9 @@
 {% block bank %}
         <h1>Profile - {{ profiles.username }} </h1>
 
-        <h1>Profiles</h1>
-
-        <ul>
-            {% for profile in profiles %}
-            <li>{{ profile.username }}</li>
-            <li>{{ profile.email }}</li>
-            <li>{{ profile.date_joined }}</li>
-            <li>{{ profile.is_support }}</li>
-            <li>{{ profile.address }}</li>
-            <p></p>
-            {% endfor %}
-        </ul>
+        <form action="{% url 'profile-detail' pk=profile.pk %}" method="POST">
+            {% csrf_token %}
+            {% render_form serializer %}
+            <input type="submit" value="Save">
+        </form>
 {% endblock bank %}

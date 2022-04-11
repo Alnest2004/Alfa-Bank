@@ -31,8 +31,11 @@
 					<li><a href="">Оформить кредит</a></li>
 					<li class="litext">
 						{% if request.user.is_authenticated %}
-							{{ user.username }}  |
-							<a href="{% url 'logout' %}"> Выход </a>
+							<a href="{{ user.get_absolute_url }}"> {{ user.username }}  | </a>
+							<a href="{% url 'logout' %}"> Выйти </a>
+						{% else %}
+							<a href="{% url 'register' %}">Регистрация</a> |
+							<a href="{% url 'login' %}">Войти</a>
 						{% endif %}
 					</li>
 

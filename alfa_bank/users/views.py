@@ -1,35 +1,16 @@
-from django.contrib.auth.views import LoginView
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
-from rest_framework import status
+from django.contrib.auth import login, authenticate
+
+from rest_framework import status, generics, permissions, serializers
+from rest_framework.permissions import AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
+from django.shortcuts import render, get_object_or_404, redirect
+
 
 from users.models import User
 from users.serializers import UserRegisterSerializer, ProfileSerializer, LoginSerializer
 
-
-class RegisterUserView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'internet_banking/profile_list.html'
-
-    def get(self, request):
-        queryset = User.objects.all()
-        return Response({'profiles': queryset})
-
-    def post(self, request, *args, **kwargs):
-        serializer = UserRegisterSerializer(data=request.data)
-        data = {}
-        if serializer.is_valid():
-            serializer.save()
-            data['response'] = True
-            return Response(data, status=status.HTTP_200_OK)
-        else:
-            data = serializer.errors
-            return Response(data)
 
 
 class ProfileList(APIView):
@@ -46,21 +27,61 @@ class ProfileDetail(APIView):
     template_name = 'internet_banking/profile_detail.html'
 
     def get(self, request, pk):
-        queryset = User.objects.filter(pk=pk)
-        return Response({'profiles': queryset})
+        profile = get_object_or_404(User, pk=pk)
+        serializer = ProfileSerializer(profile)
+        return Response({'serializer': serializer, 'profile': profile})
 
-
-class LoginUser(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'internet_banking/login.html'
-
-    def post(self, request):
-        profile = User.objects.all()
-        serializer = LoginSerializer(profile, data=request.data)
+    def post(self, request, pk):
+        profile = get_object_or_404(User, pk=pk)
+        serializer = ProfileSerializer(profile, data=request.data)
         if not serializer.is_valid():
             return Response({'serializer': serializer, 'profile': profile})
         serializer.save()
-        return redirect('profile-list')
+        return redirect('home')
 
-    def get_success_url(self):
-        return reverse_lazy('home')
+
+class LoginUserView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'internet_banking/login.html'
+    serializer_class = LoginSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        serializer = LoginSerializer(None)
+        return Response({'serializer': serializer})
+
+    def post(self, request):
+        data = request.data
+        print(data)
+
+        serializer = LoginSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            print("НОРМАЛЬНОООООО")
+            User.objects.get(username=serializer.data['username'])
+            user_obj = authenticate(username=serializer.data['username'], password=data['password'])
+            login(request, user_obj)
+
+        return Response({'serializer': serializer})
+
+
+
+class RegistrationAPIView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    permission_classes = (AllowAny, )
+    serializer_class = UserRegisterSerializer
+    template_name = 'internet_banking/register.html'
+
+    def get(self, request):
+        serializer = UserRegisterSerializer(None)
+        return Response({'serializer': serializer})
+
+
+    def post(self, request):
+        user = request.data
+
+        serializer = self.serializer_class(data=user)
+        # serializer.validate(user)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
+        return Response({'serializer': serializer})

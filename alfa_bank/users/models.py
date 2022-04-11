@@ -1,6 +1,10 @@
+from datetime import timedelta, datetime
+
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.urls import reverse
+import jwt
 
 class User(AbstractUser):
     is_support = models.BooleanField(default=False, verbose_name="It's support")
@@ -8,6 +12,9 @@ class User(AbstractUser):
     photo = models.ImageField(blank=True, upload_to="photos/%Y/%m/%d/", verbose_name="Photo")
     email = models.EmailField(max_length=100, unique=True)
     url = models.SlugField(max_length=130, unique=False)
+
+    def get_absolute_url(self):
+        return reverse('my_profile', kwargs={'url': self.username})
 
     def save(self, *args, **kwargs):
         self.url = self.username
@@ -39,3 +46,16 @@ class User(AbstractUser):
             return kol
         except:
             return 0
+
+    def create_user(self, username, email, password, password2):
+        if username is None:
+            raise TypeError("Пользователь должен заполнить имя пользователя")
+
+        if email is None:
+            raise TypeError('У пользователя должен быть email')
+
+        user = self.model(username=username, email=self.normalize_email(email))
+        user.set_password(password)
+        user.save()
+
+        return user
