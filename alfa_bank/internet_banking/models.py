@@ -4,18 +4,18 @@ from django.db import models
 
 
 class Customer(models.Model):
-    fname = models.CharField(max_length=100)
-    lname = models.CharField(max_length=100)
-    pname = models.CharField(max_length=100)
-    city = models.CharField(max_length=255)
-    house = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to="clients/%Y/%m/%d", null=True)
+    fname = models.CharField(max_length=100, unique=False)
+    lname = models.CharField(max_length=100, unique=False)
+    pname = models.CharField(max_length=100, unique=False)
+    city = models.CharField(max_length=255, unique=False)
+    house = models.TextField(max_length=255, unique=False)
+    photo = models.ImageField(upload_to="clients/%Y/%m/%d", null=True, blank=True)
 
     phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
     phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16, unique=True, null=True)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="client_user",
-                             on_delete=models.CASCADE, verbose_name="User")
+                             on_delete=models.CASCADE, verbose_name="User", default=None, blank=True)
 
     # service = models.ForeignKey('TypeService', null=True, on_delete=models.PROTECT)
 

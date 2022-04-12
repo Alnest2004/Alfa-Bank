@@ -2,9 +2,9 @@
 {% load rest_framework %}
 
 {% block bank %}
-        <h1>Profile Register</h1>
+        <h1>Detail Customer Form</h1>
 
-        <form method="post" enctype="multipart/form-data" style="margin-left: 20px;">
+        <form method="post" enctype='multipart/form-data' style="margin-left: 20px;">
             {% csrf_token %}
 
             {% for f in form %}
@@ -12,7 +12,7 @@
             <div class="form-error">{{ f.errors }}</div>
             {% endfor %}
 
-    <button class="knopka" type="submit">Регистрация</button>
+    <button class="knopka" type="submit">Завершить</button>
         </form>
 
 {% endblock bank %}

@@ -10,7 +10,8 @@ from rest_framework.views import APIView
 from django.shortcuts import render, get_object_or_404, redirect
 
 from alfa_bank.settings import DEFAULT_FROM_EMAIL, RECIPIENTS_EMAIL
-from users.forms import LoginUserForm, RegisterUserForm
+from internet_banking.models import Account
+from users.forms import LoginUserForm, RegisterUserForm, RegisterCustomerForm
 from users.models import User
 from users.serializers import UserRegisterSerializer, ProfileSerializer
 from alfa_bank.celery import app
@@ -71,21 +72,37 @@ def contact_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            acc = Account(
+                user = request.user
+            )
+            acc.save()
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
-            password1 = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
             RECIPIENTS_EMAIL.append(email)
-            print('email === '+email)
-            print(type(email))
             try:
                 post_email.delay(username, RECIPIENTS_EMAIL)
             except BadHeaderError:
                 return HttpResponse('Ошибка в теме письма.')
-            return redirect('home')
+            return redirect('customer')
     else:
         return HttpResponse('Неверный запрос. ')
     return render(request, "internet_banking/register.html", {'form': form})
+
+def CreateCustomerView(request):
+    if request.method == 'GET':
+        form = RegisterCustomerForm()
+    elif request.method == 'POST':
+        form = RegisterCustomerForm(request.POST, request.FILES)
+        print(form)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+
+            return redirect('home')
+    else:
+        return HttpResponse('Неверный запрос. ')
+    return render(request, "internet_banking/addcustomer.html", {'form': form})
 
 # class LoginUserView(APIView):
 #     renderer_classes = [TemplateHTMLRenderer]

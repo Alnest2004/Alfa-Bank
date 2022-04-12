@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from django.core.exceptions import ValidationError
 
+from internet_banking.models import Account, Customer
 from users.models import User
 
 
@@ -27,3 +28,19 @@ class RegisterUserForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
+
+class RegisterCustomerForm(forms.ModelForm):
+    fname = forms.CharField(label='Имя')
+    lname = forms.CharField(label='Фамилия')
+    pname = forms.CharField(label='Отчество')
+    city = forms.CharField(label='Город')
+    house = forms.CharField(label='Дом')
+    photo = forms.ImageField(label='Ваше фото',required=False)
+    phoneNumber = forms.CharField(label='Номер телефона')
+    # user = forms.IntegerField(label='Пользователь', widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = Customer
+        fields = "__all__"
+
+    # def validate(self):
