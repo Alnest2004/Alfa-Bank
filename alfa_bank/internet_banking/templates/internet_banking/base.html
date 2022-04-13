@@ -27,7 +27,7 @@
 			<nav>
 				<ul>
 					<li><a href="{% url 'about_us' %}">О Банке</a></li>
-					<li><a href="">Перевод средств</a></li>
+					<li><a href="{% url 'transfer' %}">Перевод средств</a></li>
 					<li><a href="">Оформить кредит</a></li>
 					<li class="litext">
 						{% if request.user.is_authenticated %}

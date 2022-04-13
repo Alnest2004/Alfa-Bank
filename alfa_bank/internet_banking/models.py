@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
@@ -36,6 +38,8 @@ class Account(models.Model):
         return f'{self.user.username}'
 
 
+
+
 class Action(models.Model):
     amount = models.DecimalField(
         max_digits=12,
@@ -58,7 +62,9 @@ class Transfer(models.Model):
     from_account = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
-        related_name='from_account'
+        related_name='from_account',
+        blank=True,
+        null=True
     )
 
     to_account = models.ForeignKey(
@@ -68,18 +74,23 @@ class Transfer(models.Model):
     )
 
     amount = models.DecimalField(
-        default = 0,
-        max_digits=12,
-        decimal_places=2
-    )
-
-    commission = models.DecimalField(
         default=0,
         max_digits=12,
         decimal_places=2
     )
 
+    commission = models.DecimalField(
+        default=1.2,
+        max_digits=12,
+        decimal_places=2
+    )
+
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.date)
+
+
 
 
 class Loans(models.Model):
@@ -102,8 +113,3 @@ class Loans(models.Model):
 
     def __str__(self):
         return str(self.Credit_amount)
-
-
-
-
-
