@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, DetailView
 from rest_framework import viewsets, mixins
 
 from internet_banking.forms import CreateTransferForm
-from internet_banking.models import Account
+from internet_banking.models import Account, Transfer
 from internet_banking.services import make_transfer, filter_user_account, check_account_exists
 from users.models import User
 from decimal import Decimal

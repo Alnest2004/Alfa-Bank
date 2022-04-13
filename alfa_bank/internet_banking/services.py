@@ -5,8 +5,9 @@ from django.core.exceptions import ValidationError
 
 from internet_banking.models import Transfer, Account
 
+com = Decimal("1.2")
 
-def make_transfer(from_account, to_account, amount, comm):
+def make_transfer(from_account, to_account, amount):
     if from_account.balance < amount:
         raise (ValueError('Not enough money'))
     if from_account == to_account:
@@ -14,7 +15,7 @@ def make_transfer(from_account, to_account, amount, comm):
 
     with transaction.atomic():
         from_balance = from_account.balance - amount -\
-                       (amount*(Decimal("1.2"))/100)
+                       (amount*(com)/100)
         from_account.balance = from_balance
         from_account.save()
 
@@ -25,7 +26,8 @@ def make_transfer(from_account, to_account, amount, comm):
         transfer = Transfer.objects.create(
             from_account=from_account,
             to_account=to_account,
-            amount=amount
+            amount=amount,
+            commission=com
         )
 
     return transfer
