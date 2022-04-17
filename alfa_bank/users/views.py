@@ -69,7 +69,7 @@ def contact_view(request):
         form = RegisterUserForm()
     elif request.method == 'POST':
         form = RegisterUserForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.recaptcha_is_valid:
             user = form.save()
             login(request, user)
             acc = Account(

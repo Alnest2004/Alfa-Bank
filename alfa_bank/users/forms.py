@@ -41,6 +41,6 @@ class RegisterCustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = "__all__"
+        exclude = ['user', ]
 
     # def validate(self):

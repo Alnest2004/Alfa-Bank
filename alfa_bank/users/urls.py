@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
+from internet_banking.decorators import check_recaptcha
 from users.views import ProfileList, ProfileDetail, LoginUser, contact_view, CreateCustomerView
 
 urlpatterns = [
@@ -17,7 +18,7 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('create_customer/', CreateCustomerView, name='customer'),
 
-    path('register/', contact_view, name='register')
+    path('register/', check_recaptcha(contact_view), name='register')
 
 ]
 

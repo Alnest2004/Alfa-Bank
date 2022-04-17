@@ -1,14 +1,22 @@
+import traceback
+
 from django.contrib.auth import logout
-from django.http import HttpResponse
+from django.core.mail import BadHeaderError
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, DetailView
 from rest_framework import viewsets, mixins
 
-from internet_banking.forms import CreateTransferForm
+from alfa_bank.celery import app
+from alfa_bank.settings import RECIPIENTS_EMAIL
+from internet_banking.forms import CreateTransferForm, CreateLoanForm
 from internet_banking.models import Account, Transfer
-from internet_banking.services import make_transfer, filter_user_account, check_account_exists
+from internet_banking.services import make_transfer, filter_user_account, check_account_exists, make_loan
 from users.models import User
 from decimal import Decimal
+
+from users.task import post_email_loan
+
 
 class HomePageView(TemplateView):
     template_name = 'internet_banking/index.html'
@@ -36,6 +44,8 @@ class MyProfileView(DetailView):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
 #
 #
 # class ActionViewSet(viewsets.GenericViewSet,
@@ -46,7 +56,7 @@ def CreateTransfer(request):
     if request.method == 'GET':
         form = CreateTransferForm()
     elif request.method == 'POST':
-        form = CreateTransferForm(request.POST)
+        form = CreateTransferForm(data=request.POST)
         if form.is_valid():
             twoattr = Account.objects.filter(user=request.user)[:1]
 
@@ -62,9 +72,57 @@ def CreateTransfer(request):
                 to_account,
                 Decimal(request.POST['amount'])
             )
-            return redirect('home')
+            return render(request, "internet_banking/success.html",)
     else:
         return HttpResponse('Неверный запрос. ')
-    return render(request, "internet_banking/addcustomer.html", {'form': form})
+    return render(request, "internet_banking/create_transfer.html", {'form': form})
+
+@app.task()
+def LoanProcessingView(request):
+    if request.method == 'GET':
+        form = CreateLoanForm()
+    elif request.method == 'POST':
+        form = CreateLoanForm(data=request.POST)
+        if form.is_valid() and request.recaptcha_is_valid:
+            twoattr = Account.objects.filter(user=request.user)[:1]
+
+            from_account = filter_user_account(
+                request.user,
+                twoattr
+            )
+
+            make_loan(
+                from_account,
+                request.POST['Credit_amount'],
+                request.POST['time']
+            )
+
+            # email = form.cleaned_data['email']
+            email = request.user.email
+            RECIPIENTS_EMAIL.append(email)
+            try:
+                post_email_loan.delay(
+                    request.POST['Credit_amount'],
+                    request.POST['time'],
+                    RECIPIENTS_EMAIL
+                )
+            except BadHeaderError:
+                return HttpResponse('Ошибка в теме письма.')
+
+            return render(request, "internet_banking/loan_processing.html", {'form': form})
+    else:
+        return HttpResponse('Неверный запрос. ')
+    return render(request, "internet_banking/loan_processing.html", {'form': form})
 
 
+
+def handler404(request, *args, **kwargs):
+    return render(request, "errors/404.html", status=404)
+
+
+def handler403(request, *args, **kwargs):
+    return render(request, "errors/403.html", status=403)
+
+
+def handler500(request, *args, **kwargs):
+    return render(request, "errors/500.html", status=500)

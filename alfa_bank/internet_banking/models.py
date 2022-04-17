@@ -109,6 +109,8 @@ class Loans(models.Model):
         max_digits=12,
         decimal_places=2
     )
+    time = models.IntegerField()
+
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

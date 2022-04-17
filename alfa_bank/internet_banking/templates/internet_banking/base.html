@@ -23,12 +23,12 @@
 	<section class="billboard light">
 		<header class="wrapper light">
 			<a href="{% url 'home' %}"> <img class="logo" height="150px" width="150px" src="{% static 'internet_banking/images/logo.png' %}"/> </a>
-			<tt class="logo_text" width="200px">Альфа-Банк</tt>
+			<a href="{% url 'home' %}"> <tt class="logo_text" width="200px">Альфа-Банк</tt> </a>
 			<nav>
 				<ul>
 					<li><a href="{% url 'about_us' %}">О Банке</a></li>
 					<li><a href="{% url 'transfer' %}">Перевод средств</a></li>
-					<li><a href="">Оформить кредит</a></li>
+					<li><a href="{% url 'loan' %}">Оформить кредит</a></li>
 					<li class="litext">
 						{% if request.user.is_authenticated %}
 							<a href="{{ user.get_absolute_url }}"> {{ user.username }}  | </a>
@@ -83,8 +83,8 @@
 
 			<nav>
 				<ul>
-					<li><a href="#">About</a></li>
-					<li><a href="#">FAQ</a></li>
+					<li><a href="{% url 'about_us' %}">About</a></li>
+					<li><a href="https://www.alfabank.by/about/faq/">FAQ</a></li>
 					<li><a href="#">Services</a></li>
 					<li><a href="#">Blog</a></li>
 					<li><a href="#">Contact</a></li>

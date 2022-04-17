@@ -92,3 +92,51 @@ tt{
     font-weight: 700;
 }
 
+.e404{
+    color:lime;
+    text-weight: 700;
+    transition: opacity .6s;
+}
+
+.e404:hover{
+    opacity: 0.5
+}
+
+a{
+    text-decoration:none;
+}
+
+.error_message{
+    color:red;
+    text-weight: 700;
+}
+
+.g-recaptcha{
+    margin-top: 20px;
+}
+
+.otziv{
+  font-size: 80px;
+  background: linear-gradient(135deg, #000000 20%, #0ec4fa 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  border: 3px solid transparent;
+  border-image: linear-gradient(135deg, #000000 20%, #0ec4fa 70%);
+  border-image-slice: 1;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  margin-left: 350px;
+  margin-right: 50px;
+  opacity: 0.7;
+  transition: opacity .1s;
+}
+
+.otziv:hover{
+    opacity: 1
+}
+
+.info2{
+    padding-bottom: 40px;
+}

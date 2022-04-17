@@ -3,15 +3,15 @@ from decimal import Decimal
 from django.db import transaction
 from django.core.exceptions import ValidationError
 
-from internet_banking.models import Transfer, Account
+from internet_banking.models import Transfer, Account, Loans
 
 com = Decimal("1.2")
 
 def make_transfer(from_account, to_account, amount):
     if from_account.balance < amount:
-        raise (ValueError('Not enough money'))
+        raise (ValueError('Не достаточно средств'))
     if from_account == to_account:
-        raise (ValueError('Chose another account'))
+        raise (ValueError('Выберите другой аккаунт'))
 
     with transaction.atomic():
         from_balance = from_account.balance - amount -\
@@ -31,6 +31,16 @@ def make_transfer(from_account, to_account, amount):
         )
 
     return transfer
+
+def make_loan(from_account, credit_amount, time):
+
+
+    loan = Loans.objects.create(
+        account = from_account,
+        Credit_amount = credit_amount,
+        time = time,
+    )
+
 
 
 def filter_user_account(user, account_id):

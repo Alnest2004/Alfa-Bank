@@ -13,15 +13,15 @@
                 {% endif %}
             </tt>
         </p>
-          {% if request.user.is_authenticated %}
-            {% for customer in user.client_user.all %}
+          {% for customer in user.client_user.all %}
+            {% if customer.photo %}
                 <img class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-1" alt="" data-image-width="997" data-image-height="700"
              src="{{ customer.photo.url }}">
-            {% endfor %}
-          {% else %}
-            <img class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-1" alt="" data-image-width="997" data-image-height="700"
+            {% else %}
+                <img class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-1" alt="" data-image-width="997" data-image-height="700"
              src="{% static 'internet_banking/images/ghghhgh.jpg' %}">
-          {% endif %}
+            {% endif %}
+          {% endfor %}
         <div class="u-align-left u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-palette-2-base u-radius-20 u-shape-round u-group-1">
           <div class="u-container-layout u-container-layout-1">
             <h6 class="u-custom-font u-font-open-sans u-text u-text-default u-text-3">фио</h6>
