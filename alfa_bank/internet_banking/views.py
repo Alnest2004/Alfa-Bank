@@ -82,37 +82,50 @@ def LoanProcessingView(request):
     if request.method == 'GET':
         form = CreateLoanForm()
     elif request.method == 'POST':
-        form = CreateLoanForm(data=request.POST)
-        if form.is_valid() and request.recaptcha_is_valid:
-            twoattr = Account.objects.filter(user=request.user)[:1]
+        submit_button = request.POST.get('submit_button')
+        if submit_button == 'credit':
+            form = CreateLoanForm(data=request.POST)
+            if form.is_valid() and request.recaptcha_is_valid:
+                twoattr = Account.objects.filter(user=request.user)[:1]
 
-            from_account = filter_user_account(
-                request.user,
-                twoattr
-            )
-
-            make_loan(
-                from_account,
-                request.POST['Credit_amount'],
-                request.POST['time']
-            )
-
-            # email = form.cleaned_data['email']
-            email = request.user.email
-            RECIPIENTS_EMAIL.append(email)
-            try:
-                post_email_loan.delay(
-                    request.POST['Credit_amount'],
-                    request.POST['time'],
-                    RECIPIENTS_EMAIL
+                from_account = filter_user_account(
+                    request.user,
+                    twoattr
                 )
-            except BadHeaderError:
-                return HttpResponse('Ошибка в теме письма.')
 
-            return render(request, "internet_banking/loan_processing.html", {'form': form})
+                make_loan(
+                    from_account,
+                    request.POST['Credit_amount'],
+                    request.POST['time']
+                )
+
+                # email = form.cleaned_data['email']
+                email = request.user.email
+                RECIPIENTS_EMAIL.append(email)
+                try:
+                    post_email_loan.delay(
+                        request.POST['Credit_amount'],
+                        request.POST['time'],
+                        RECIPIENTS_EMAIL
+                    )
+                except BadHeaderError:
+                    return HttpResponse('Ошибка в теме письма.')
+
+                message = f"Кредит на сумму {request.POST['Credit_amount']} бел.руб. успешно оформлен, спасибо что выбрали нас! С уважением Альфа-Банк"
+                return render(request, "internet_banking/loan_processing.html", {'form': form, 'mess':message})
+        else:
+            form = CreateLoanForm(data=request.POST)
+            if form.is_valid()  and request.recaptcha_is_valid:
+                monthly_payment = Decimal(request.POST['Credit_amount']) / Decimal(request.POST['time'])
+                monthly_payment = float("%.2f"% monthly_payment)
+                return render(request, "internet_banking/loan_processing.html",
+                              {'form': form, 'monthly_payment': monthly_payment})
+
     else:
         return HttpResponse('Неверный запрос. ')
     return render(request, "internet_banking/loan_processing.html", {'form': form})
+
+
 
 
 

@@ -50,7 +50,6 @@ class CreateTransferForm(forms.ModelForm):
         model = Transfer
         exclude = ['from_account', ]
 
-
 class CreateLoanForm(forms.ModelForm):
     Credit_amount = forms.DecimalField(label='Желаемая сумма', max_value=10000, min_value=100)
     time = forms.IntegerField(label='На какой срок', max_value=32, min_value=1)
