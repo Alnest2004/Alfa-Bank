@@ -3,7 +3,7 @@ from rest_framework import routers
 
 from internet_banking.decorators import check_recaptcha
 from internet_banking.views import HomePageView, AboutView, logout_user, MyProfileView, CreateTransfer, \
-    LoanProcessingView
+    LoanProcessingView, CreateReviewView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -12,7 +12,6 @@ urlpatterns = [
 
     path('logout/', logout_user, name='logout'),
     path('transfer/', CreateTransfer, name='transfer'),
-    path('loan/', check_recaptcha(LoanProcessingView), name='loan')
+    path('loan/', check_recaptcha(LoanProcessingView), name='loan'),
+    path('review/', CreateReviewView, name='add_review')
 ]
-
-

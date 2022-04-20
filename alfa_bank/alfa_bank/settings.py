@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     # 'debug_toolbar',
     'djoser',
+
+    'snowpenguin.django.recaptcha3',
 ]
 
 MIDDLEWARE = [
@@ -124,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -228,3 +230,8 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LenB38fAAAAAI-YbhnA8PvDzArx56HmUHCfxu48'
+
+RECAPTCHA_PUBLIC_KEY = "6LdlioofAAAAAFt9E2MUKHZ8iZMKIhAq0Xi-_y0n"
+RECAPTCHA_PRIVATE_KEY = "6LdlioofAAAAAPmAKWOkYSru8CsKM_WNVOxp9qJk"
+RECAPTCHA_DEFAULT_ACTION = 'generic'
+RECAPTCHA_SCORE_THRESHOLD = 0.5

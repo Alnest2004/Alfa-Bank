@@ -3,9 +3,10 @@ from decimal import Decimal
 from django.db import transaction
 from django.core.exceptions import ValidationError
 
-from internet_banking.models import Transfer, Account, Loans
+from internet_banking.models import Transfer, Account, Loans, Reviews
 
 com = Decimal("1.2")
+comis_loan = Decimal("2.9")
 
 def make_transfer(from_account, to_account, amount):
     if from_account.balance < amount:
@@ -40,6 +41,17 @@ def make_loan(from_account, credit_amount, time):
         Credit_amount = credit_amount,
         time = time,
     )
+
+    return loan
+
+def make_review(from_user, text):
+
+    review = Reviews.objects.create(
+        user = from_user,
+        text = text
+    )
+
+    return review
 
 
 

@@ -5,7 +5,12 @@
 {% block menu %}
 		<div class="caption light animated wow fadeInDown clearfix">
 			{% if request.user.is_authenticated %}
-							Добро пожаловать, {{ user.username }}!
+							Добро пожаловать,
+							{% for client in user.client_user.all %}
+
+								{{ client.fname }}!
+
+							{% endfor %}
 			{% endif %}
 			<h1>100% кредит онлайн - без посещения отделения банка.</h1>
 			<hr>
@@ -52,7 +57,7 @@
                 {% if monthly_payment %}
                     ~ {{ monthly_payment }}
                 {% else %}
-                    0
+                    -
                 {% endif %}
             </big> рублей</p>
 

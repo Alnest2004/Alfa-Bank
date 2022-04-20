@@ -104,6 +104,9 @@ def CreateCustomerView(request):
         return HttpResponse('Неверный запрос. ')
     return render(request, "internet_banking/addcustomer.html", {'form': form})
 
+
+
+
 # class LoginUserView(APIView):
 #     renderer_classes = [TemplateHTMLRenderer]
 #     template_name = 'internet_banking/login.html'

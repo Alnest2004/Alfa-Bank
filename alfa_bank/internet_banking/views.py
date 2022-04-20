@@ -1,25 +1,29 @@
-import traceback
-
 from django.contrib.auth import logout
 from django.core.mail import BadHeaderError
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import TemplateView, DetailView
-from rest_framework import viewsets, mixins
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, DetailView, ListView
 
 from alfa_bank.celery import app
 from alfa_bank.settings import RECIPIENTS_EMAIL
-from internet_banking.forms import CreateTransferForm, CreateLoanForm
-from internet_banking.models import Account, Transfer
-from internet_banking.services import make_transfer, filter_user_account, check_account_exists, make_loan
+from internet_banking.forms import CreateTransferForm, CreateLoanForm, ReviewForm
+from internet_banking.models import Account, Reviews
+from internet_banking.services import make_transfer, filter_user_account, check_account_exists, make_loan, comis_loan, \
+    make_review
 from users.models import User
 from decimal import Decimal
 
 from users.task import post_email_loan
 
 
-class HomePageView(TemplateView):
+class HomePageView(ListView):
+    model = Reviews
     template_name = 'internet_banking/index.html'
+    context_object_name = "reviews_object"
+
+    def get_queryset(self):
+        return Reviews.objects.order_by('-pk')[0:3]
+
 
 
 class AboutView(TemplateView):
@@ -72,10 +76,11 @@ def CreateTransfer(request):
                 to_account,
                 Decimal(request.POST['amount'])
             )
-            return render(request, "internet_banking/success.html",)
+            return render(request, "internet_banking/success.html", )
     else:
         return HttpResponse('Неверный запрос. ')
     return render(request, "internet_banking/create_transfer.html", {'form': form})
+
 
 @app.task()
 def LoanProcessingView(request):
@@ -111,22 +116,22 @@ def LoanProcessingView(request):
                 except BadHeaderError:
                     return HttpResponse('Ошибка в теме письма.')
 
-                message = f"Кредит на сумму {request.POST['Credit_amount']} бел.руб. успешно оформлен, спасибо что выбрали нас! С уважением Альфа-Банк"
-                return render(request, "internet_banking/loan_processing.html", {'form': form, 'mess':message})
+                message = f"Кредит на сумму {request.POST['Credit_amount']} бел.руб. успешно оформлен," \
+                          f" спасибо что выбрали нас! С уважением Альфа-Банк"
+                return render(request, "internet_banking/loan_processing.html", {'form': form, 'mess': message})
         else:
             form = CreateLoanForm(data=request.POST)
-            if form.is_valid()  and request.recaptcha_is_valid:
-                monthly_payment = Decimal(request.POST['Credit_amount']) / Decimal(request.POST['time'])
-                monthly_payment = float("%.2f"% monthly_payment)
+            if form.is_valid() and request.recaptcha_is_valid:
+                monthly_payment = (Decimal(request.POST['Credit_amount']) / Decimal(
+                    request.POST['time'])) / 100 * comis_loan + (Decimal(request.POST['Credit_amount']) / Decimal(
+                    request.POST['time']))
+                monthly_payment = float("%.2f" % monthly_payment)
                 return render(request, "internet_banking/loan_processing.html",
                               {'form': form, 'monthly_payment': monthly_payment})
 
     else:
         return HttpResponse('Неверный запрос. ')
     return render(request, "internet_banking/loan_processing.html", {'form': form})
-
-
-
 
 
 def handler404(request, *args, **kwargs):
@@ -139,3 +144,20 @@ def handler403(request, *args, **kwargs):
 
 def handler500(request, *args, **kwargs):
     return render(request, "errors/500.html", status=500)
+
+
+def CreateReviewView(request):
+    if request.method == 'GET':
+        form = ReviewForm()
+    elif request.method == 'POST':
+        form = ReviewForm(data=request.POST)
+
+        if form.is_valid():
+            make_review(
+                request.user,
+                request.POST['text']
+            )
+        return render(request, "internet_banking/success.html", )
+    else:
+        return HttpResponse('Неверный запрос. ')
+    return render(request, "internet_banking/reviews.html", {'form': form})

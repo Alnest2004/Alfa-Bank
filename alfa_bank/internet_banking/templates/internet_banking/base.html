@@ -46,7 +46,12 @@
 	{% block menu %}
 		<div class="caption light animated wow fadeInDown clearfix">
 			{% if request.user.is_authenticated %}
-							Добро пожаловать, {{ user.username }}!
+							Добро пожаловать,
+							{% for client in user.client_user.all %}
+
+								{{ client.fname }}!
+
+							{% endfor %}
 			{% endif %}
 			<h1>Альфа-Банк хранит Ваши деньги… и лучшие воспоминания.</h1>
 			<p>Твои личные безналичные.</p>

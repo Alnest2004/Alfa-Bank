@@ -1,4 +1,5 @@
 {% extends 'internet_banking/base.html' %}
+{% load static %}
 
 {% block bank %}
 <section class="services wrapper">
@@ -43,42 +44,32 @@
 		</div>
 
 		<ul class="clearfix">
-			<li class="animated wow fadeInDown">
-				<p><img src="img/quotes.png" alt="" class="quotes"/>Dolor sit amet consectetur isicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud laboris.
-				<span class="triangle"></span>
-				</p>
-				<div class="client">
-					<img src="img/client1.jpg" class="avatar"/>
-					<div class="client_details">
-						<h4>John Doe</h4>
-						<h5>CEO</h5>
+			{% for review in reviews_object %}
+				<li class="animated wow fadeInDown">
+					<p><img src="{% static 'internet_banking/images/img.png' %}" alt="" class="quotes"/>
+						{{ review.text }}
+					<span class="triangle"></span>
+					</p>
+					<div class="client">
+						{% for re in review.user.client_user.all %}
+							{% if re.photo %}
+								<img width="80px" height="80px" src="{{ re.photo.url }}" class="avatar">
+							{% else %}
+								<img width="80px" height="80px"  src="{% static 'internet_banking/images/4080.jpg' %}" class="avatar">
+							{% endif %}
+						{% endfor %}
+
+						<div class="client_details">
+							<h4>
+								{% for re in review.user.client_user.all %}
+									{{ re.fname }}
+								{% endfor %}
+							</h4>
+							<h5>{{ review.data }}</h5>
+						</div>
 					</div>
-				</div>
-			</li>
-			<li class="animated wow fadeInDown"  data-wow-delay=".2s">
-				<p><img src="img/quotes.png" alt="" class="quotes"/>Tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam sunt in culpa officia deserunt mollit anim laborum sint occaecat.
-				<span class="triangle"></span>
-				</p>
-				<div class="client">
-					<img src="img/client2.jpg" class="avatar"/>
-					<div class="client_details">
-						<h4>Alex Martin</h4>
-						<h5>UI Designer</h5>
-					</div>
-				</div>
-			</li>
-			<li class="animated wow fadeInDown"  data-wow-delay=".4s">
-				<p><img src="img/quotes.png" alt="" class="quotes"/>Aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse slum dolore eu fugiat nulla pariatursint occaecat.
-				<span class="triangle"></span>
-				</p>
-				<div class="client">
-					<img src="img/client3.jpg" class="avatar"/>
-					<div class="client_details">
-						<h4>Linda Doe</h4>
-						<h5>Developer</h5>
-					</div>
-				</div>
-			</li>
+				</li>
+			{% endfor %}
 		</ul>
 	</section><!--  End testimonials  -->
     {% endblock testimonials %}

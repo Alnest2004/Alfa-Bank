@@ -115,3 +115,20 @@ class Loans(models.Model):
 
     def __str__(self):
         return str(self.Credit_amount)
+
+
+class Reviews(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name="review_user",
+                             on_delete=models.PROTECT,
+                             verbose_name="User")
+
+    text = models.TextField("Напишите ваш отзыв ", max_length=1000)
+    data = models.DateTimeField("Текущее время", auto_now=True)
+
+    def __str__(self):
+        return f"Review from - {self.user}"
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
