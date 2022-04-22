@@ -1,0 +1,80 @@
+{% extends 'internet_banking/base.html' %}
+{% load rest_framework %}
+{% load static %}
+
+
+
+{% block menu %}
+<div class="b-container">
+		<div class="caption light animated wow fadeInDown clearfix">
+			<h1>Нам очень приятно, что вы выбрали наш банк. Давайте становится лучше вместе :).
+            Нам очень важно любое Ваше мнение!</h1>
+			<hr>
+		</div>
+		<div class="shadow"></div>
+	</section><!--  End billboard  -->
+{% endblock menu %}
+
+{% block bank %}
+        <h1>Create Reviews</h1>
+
+        <form class="review_form" method="post" style="margin-left: 20px;">
+            {% csrf_token %}
+            {% for f in form %}
+            <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+
+    <button class="knopka_transfer review" type="submit">Отправить отзыв</button>
+        </form>
+
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+            <script>
+
+                $(document).ready(function() {
+                    $("#myMessage").modal('show');
+                });
+            </script>
+        {% endif %}
+    {% endfor %}
+
+<img align="middle" class="happy_client" width="400px" height="200px" src="{% static 'internet_banking/images/happy_client.jpg' %}" alt="">
+
+
+
+</div>
+
+<!— Modal (Backend message) —>
+    <div class="modal fade" id="myMessage" tabindex="-1" aria-labelledby="myMessageLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myMessageLabel"><i class="fas fa-biohazard"></i>&nbsp;&nbsp; Превосходно !</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="text-center text-success mt-3">
+                        <i class="fas fa-check-circle fa-6x" style="color: #a5dc86;"> </i>
+                    </div>
+                    <br>
+                    <div class="mb-3">Ваш отзыв успешно отправлен! </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'home' %}" type="button" class="btn btn-secondary btn-sm" style="width: 110px;">На главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+{% endblock bank %}
+
+
+
+
