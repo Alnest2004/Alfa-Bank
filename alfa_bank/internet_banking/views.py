@@ -1,8 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import BadHeaderError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, DetailView, ListView
+from rest_framework.decorators import permission_classes, api_view
 
 from alfa_bank.celery import app
 from alfa_bank.settings import RECIPIENTS_EMAIL
@@ -14,6 +17,7 @@ from users.models import User
 from decimal import Decimal
 
 from users.task import post_email_loan
+from rest_framework.permissions import IsAuthenticated
 
 
 class HomePageView(ListView):
@@ -30,8 +34,9 @@ class AboutView(TemplateView):
     template_name = 'internet_banking/about.html'
 
 
-class MyProfileView(DetailView):
+class MyProfileView(LoginRequiredMixin, DetailView):
     model = User
+    permission_classes = [IsAuthenticated]
 
     template_name = 'internet_banking/my_profile.html'
     slug_field = 'url'
@@ -153,11 +158,13 @@ def CreateReviewView(request):
         form = ReviewForm(data=request.POST)
 
         if form.is_valid():
+            messages.success(request, "Message sent successfully!")
+
             make_review(
                 request.user,
                 request.POST['text']
             )
-        return render(request, "internet_banking/success.html", )
+        return render(request, "internet_banking/reviews.html", {'form': form})
     else:
         return HttpResponse('Неверный запрос. ')
     return render(request, "internet_banking/reviews.html", {'form': form})

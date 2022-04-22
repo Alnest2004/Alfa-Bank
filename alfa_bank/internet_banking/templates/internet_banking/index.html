@@ -5,23 +5,22 @@
 <section class="services wrapper">
 		<ul class="clearfix">
 			<li class="animated wow fadeInDown">
-				<img class="icon" src="img/icon1.png" alt=""/>
+				<img class="icon" src="{% static 'internet_banking/images/money.png' %}" alt=""/>
 				<span class="separator"></span>
-				<h2>Officia Deserunt Mollit</h2>
-				<p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua voluptate velit esse
-				cillum dolore.</p>
+				<h2>Гарантия безопасности денежных средств</h2>
+				<p>с использованием Блокчейна</p>
 			</li>
 			<li class="animated wow fadeInDown"  data-wow-delay=".2s">
-				<img class="icon" src="img/icon2.png" alt=""/>
+				<img class="icon" src="{% static 'internet_banking/images/agent.png' %}" alt=""/>
 				<span class="separator"></span>
-				<h2>Culpa Killum Dolore</h2>
-				<p>aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+				<h2>Возможность оформление кредита на любой срок</h2>
+				<p>от 33 дней до 32 месяцев</p>
 			</li>
 			<li class="animated wow fadeInDown"  data-wow-delay=".4s">
-				<img class="icon" src="img/icon3.png" alt=""/>
+				<img class="icon" src="{% static 'internet_banking/images/procent.png' %}" alt=""/>
 				<span class="separator"></span>
-				<h2>Elit Tempor Incididunt</h2>
-				<p>nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat enim ad minim veniam.</p>
+				<h2>Самые выгодные процентные ставки</h2>
+				<p>от 3% до 5%</p>
 			</li>
 		</ul>
 	</section><!--  End services  -->
@@ -38,15 +37,15 @@
 
 	<section class="testimonials wrapper">
 		<div class="title animated wow fadeIn">
-			<h2>Testimonials</h2>
-			<h3>what clients are saying about us</h3>
+			<h2>Наши клиенты &#10084;</h2>
+			<h3>Что говорят о нас наши клиенты</h3>
 			<hr class="separator"/>
 		</div>
 
 		<ul class="clearfix">
 			{% for review in reviews_object %}
 				<li class="animated wow fadeInDown">
-					<p><img src="{% static 'internet_banking/images/img.png' %}" alt="" class="quotes"/>
+					<p><img class="index_jpg" src="{% static 'internet_banking/images/heart.jpg' %}" alt="" class="quotes"/>
 						{{ review.text }}
 					<span class="triangle"></span>
 					</p>
@@ -72,4 +71,5 @@
 			{% endfor %}
 		</ul>
 	</section><!--  End testimonials  -->
+
     {% endblock testimonials %}

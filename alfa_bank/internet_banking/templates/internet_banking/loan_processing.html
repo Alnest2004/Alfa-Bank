@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block menu %}
+{% if request.user.is_authenticated %}
 		<div class="caption light animated wow fadeInDown clearfix">
 			{% if request.user.is_authenticated %}
 							Добро пожаловать,
@@ -17,9 +18,19 @@
 		</div>
 		<div class="shadow"></div>
 	</section><!--  End billboard  -->
-{% endblock menu %}
+{% else %}
+    <div class="caption light animated wow fadeInDown clearfix">
+			<h1>	&#128560; Увы, это страничка не доступна для вас</h1>
+			<p>Что бы иметь доступ к данной страничке вы должны  <a class="main_pages fail" href="{% url 'login' %}">войти на сайт</a></p>
+            <p>Ещё не зарегистрированы? <a class="main_pages fail" href="{% url 'register' %}">Зарегистрироваться</a></p>
+			<hr>
+		</div>
+		<div class="shadow"></div>
+{% endif %}
+	{% endblock menu %}
 
 {% block bank %}
+{% if request.user.is_authenticated %}
         <h1>Create Loan</h1>
 
         <form method="post" class="form_loan" style="margin-left: 20px;">
@@ -65,7 +76,34 @@
             <p class="p_money">Сумма расчёта приблизительная</p>
             <p class="p_money big">За более подробным расчётом обратитесь в банк</p>
         </div>
-
+{% endif %}
 {% endblock bank %}
+{% block footer %}
+    {% if request.user.is_authenticated %}
+    <div class="clear"></div>
+	<div class="rasporka">
+	</div>
+	<footer>
+		<div class="wrapper">
+			<div class="rights">
+				<img src="{% static 'internet_banking/images/footer_logo.png' %}" alt="" class="footer_logo"/>
+				<p>© Alfa-Bank by Aleksandr Nesterovich. More information at
+                    <a href="https://www.instagram.com/n_e_s_t_e_r_o_v_i_c_h/" target="_blank">Instagram</a>
+                    and bank's instagram
+                    <a href="https://www.instagram.com/alfabankby/" target="_blank">Instagram</a>
+                </p>
+			</div>
+
+			<nav>
+				<ul>
+					<li><a href="{% url 'about_us' %}">About</a></li>
+					<li><a href="https://www.alfabank.by/about/faq/">FAQ</a></li>
+					<li><a href="{% url 'add_review' %}">Оставить отзыв</a></li>
+				</ul>
+			</nav>
+		</div>
+	</footer><!--  End footer  -->
+    {% endif %}
+{% endblock footer %}
 
 

@@ -42,7 +42,7 @@ class CreateTransferForm(forms.ModelForm):
 
     def clean_amount(self):
         amount = self.cleaned_data.get('amount')
-        if amount < 0:
+        if amount <= 0:
             raise ValidationError('Введите положительное число')
 
         return amount
