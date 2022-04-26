@@ -85,7 +85,7 @@ def contact_view(request):
                 return HttpResponse('Ошибка в теме письма.')
             return redirect('customer')
     else:
-        return HttpResponse('Неверный запрос. ')
+        return HttpResponse('Неверный запрос. ', status=400)
     return render(request, "internet_banking/register.html", {'form': form})
 
 def CreateCustomerView(request):
