@@ -90,7 +90,8 @@ DATABASES = {
         'NAME': "alfa_bank",
         'USER': "aleksandr",
         'PASSWORD': "Romandeko2003",
-        'HOST': "localhost",
+        # 'HOST': "localhost",
+        'HOST': "dm_db",
         'PORT': 5432,
     }
 }
