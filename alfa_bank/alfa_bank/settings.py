@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--i3_-rz2=rss7@+r53d9%jo=!8tzvk^x1ed3#9etl3t0z4#&4='
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure--i3_-rz2=rss7@+r53d9%jo=!8tzvk^x1ed3#9etl3t0z4#&4=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,21 +86,15 @@ WSGI_APPLICATION = 'alfa_bank.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "alfa_bank",
-        'USER': "aleksandr",
-        'PASSWORD': "Romandeko2003",
-        # 'HOST': "localhost",
+        'ENGINE': os.environ.get('SQL_DATABASE_ENGINE'),
+        'NAME': os.environ.get('SQL_DATABASE_NAME'),
+        'USER': os.environ.get('SQL_DATABASE_USER'),
+        'PASSWORD': os.environ.get('SQL_DATABASE_PASSWORD'),
+        # 'HOST': os.environ.get('SQL_DATABASE_HOST'),
         'HOST': "dm_db",
-        'PORT': 5432,
+        'PORT': os.environ.get('SQL_DATABASE_PORT'),
     }
 }
-
-# 'NAME': os.getenv("MY_NAME"),
-#         'USER': os.getenv("MY_USER"),
-#         'PASSWORD': os.getenv("MY_PASSWORD"),
-#         'HOST': os.getenv("MY_HOST"),
-#         'PORT': os.getenv("MY_PORT"),
 
 
 # Password validation
@@ -207,7 +201,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-REDIS_HOST = '127.0.0.1'
+REDIS_HOST = "redis"
+# REDIS_HOST = '127.0.0.1'
 REDIS_PORT = '6379'
 CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
@@ -220,19 +215,21 @@ AUTH_USER_MODEL = 'users.User'
 
 
 RECIPIENTS_EMAIL = [] # СПИСОК ПОЧТ ПОЛУЧАТЕЛЕЙ ПО УМОЛЧАНИЮ
-DEFAULT_FROM_EMAIL = 'admin@mysite.com' # МОЯ ПОЧТА
+DEFAULT_FROM_EMAIL = 'admin@mysite.com' # Email, используемый при отправки различных автоматических рассылок от имени менеджера сайта
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "aleksdoterov@gmail.com"
-EMAIL_HOST_PASSWORD = "+sashanesterovich8061021-"
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
 
-GOOGLE_RECAPTCHA_SECRET_KEY = '6LenB38fAAAAAI-YbhnA8PvDzArx56HmUHCfxu48'
 
-RECAPTCHA_PUBLIC_KEY = "6LdlioofAAAAAFt9E2MUKHZ8iZMKIhAq0Xi-_y0n"
-RECAPTCHA_PRIVATE_KEY = "6LdlioofAAAAAPmAKWOkYSru8CsKM_WNVOxp9qJk"
-RECAPTCHA_DEFAULT_ACTION = 'generic'
-RECAPTCHA_SCORE_THRESHOLD = 0.5
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
+
+GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
+
+RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
+RECAPTCHA_DEFAULT_ACTION = os.environ.get('RECAPTCHA_DEFAULT_ACTION')
+RECAPTCHA_SCORE_THRESHOLD = os.environ.get('RECAPTCHA_SCORE_THRESHOLD')
