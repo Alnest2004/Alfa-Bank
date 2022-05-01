@@ -3,19 +3,18 @@ version: '3.7'
 services:
   dm_db:
     image: postgres:10.1-alpine
+    env_file:
+      - ./.env
       # Они определяют, что данные из временной структуры — контейнера будут сохраняться на хост машине.
       # Содержимое /var/lib/postgresql/data/ в postgres_data. !!! Эта информация будет изменена при
       # жизни контейнера и останется на хост машине после его удаления.
     # После удаления контейнера ПО не остается, данные же могут использоваться в будущем
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      POSTGRES_DB: alfa_bank
-      POSTGRES_USER: aleksandr
-      POSTGRES_PASSWORD: Romandeko2003
   redis:
     image: redis
   dm_web:
+    restart: always
     # Ключевое слово "build" позволяет задать
     # путь к файлу Dockerfile, который нужно использовать для создания образа,
     # который позволит запустить сервис.
@@ -28,32 +27,25 @@ services:
     # применяется следующая конструкция: [порт компьютера]:[порт контейнера]
     ports:
       - '8000:8000'
-    environment:
-      - DEBUG=1
-      - REDIS_HOST=redis
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+    env_file:
+      - ./.env
       # Ключевое слово 'depends_on' позволяет указывать, должен ли сервис,
       # прежде чем запуститься, ждать, когда будут готовы к работе другие сервисы.
       # Нам нужно, чтобы сервис 'web' дождался бы готовности к работе сервиса 'db'.
     depends_on:
       - dm_db
-      - redis
   celery:
+    restart: always
     build: .
     command: celery -A alfa_bank worker -l INFO
     volumes:
       - .:/Users/aleks/alfa-bank
-    environment:
-      - DEBUG=1
-      - REDIS_HOST=redis
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+    env_file:
+      - ./.env
     depends_on:
       - dm_web
       - redis
+      - dm_db
 
 
 volumes:
